@@ -1,5 +1,5 @@
 import { Camera } from "expo-camera";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Image, SafeAreaView, ScrollView, TextInput, View } from "react-native";
 
 import { Button } from "../components/Button";
@@ -10,10 +10,18 @@ import { PositionProps, POSITIONS } from "../utils/positions";
 import { styles } from "./styles";
 
 export function Home() {
+  const [photo, setPhotoURI] = useState<null | string>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [positionSelected, setPositionSelected] = useState<PositionProps>(
     POSITIONS[0]
   );
+  const cameraRef = useRef<Camera>(null);
+  const screenShotRef = useRef(null);
+
+  async function handleTakePicture() {
+    const photo = await cameraRef.current.takePictureAsync();
+    setPhotoURI(photo.uri);
+  }
 
   useEffect(() => {
     Camera.requestCameraPermissionsAsync().then((response) =>
@@ -31,14 +39,21 @@ export function Home() {
           <Header position={positionSelected} />
 
           <View style={styles.picture}>
-            {hasCameraPermission ? (
-              <Camera style={styles.camera} />
+            {hasCameraPermission && !photo ? (
+              <Camera
+                ref={cameraRef}
+                style={styles.camera}
+                // type={CameraType.front}
+              />
             ) : (
               <Image
                 source={{
-                  uri: "https://images.gutefrage.net/media/fragen/bilder/meine-kamera-auf-windows-10-funktioniert-nicht-was-tun/0_big.jpg?v=1584606917000",
+                  uri: photo
+                    ? photo
+                    : "https://images.gutefrage.net/media/fragen/bilder/meine-kamera-auf-windows-10-funktioniert-nicht-was-tun/0_big.jpg?v=1584606917000",
                 }}
                 style={styles.camera}
+                // onLoad={shareScreenShot}
               />
             )}
 
@@ -56,7 +71,7 @@ export function Home() {
           positionSelected={positionSelected}
         />
 
-        <Button title="Compartilhar" />
+        <Button title="Compartilhar" onPress={handleTakePicture} />
       </ScrollView>
     </SafeAreaView>
   );
