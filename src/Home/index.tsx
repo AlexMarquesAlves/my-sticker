@@ -42,10 +42,7 @@ export function Home() {
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
-        <View
-          ref={screenShotRef}
-          // style={styles.sticker}
-        >
+        <View ref={screenShotRef} style={styles.sticker}>
           <Header position={positionSelected} />
 
           <View style={styles.picture}>
