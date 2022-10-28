@@ -1,7 +1,15 @@
-import { Camera } from "expo-camera";
+import { Camera, CameraType } from "expo-camera";
 import * as Sharing from "expo-sharing";
 import React, { useEffect, useRef, useState } from "react";
-import { Image, SafeAreaView, ScrollView, TextInput, View } from "react-native";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { captureRef } from "react-native-view-shot";
 
 import { Button } from "../components/Button";
@@ -17,6 +25,7 @@ export function Home() {
   const [positionSelected, setPositionSelected] = useState<PositionProps>(
     POSITIONS[0]
   );
+
   const cameraRef = useRef<Camera>(null);
   const screenShotRef = useRef(null);
 
@@ -50,7 +59,7 @@ export function Home() {
               <Camera
                 ref={cameraRef}
                 style={styles.camera}
-                // type={CameraType.front}
+                type={CameraType.front}
               />
             ) : (
               <Image
@@ -77,6 +86,10 @@ export function Home() {
           onChangePosition={setPositionSelected}
           positionSelected={positionSelected}
         />
+
+        <TouchableOpacity onPress={() => setPhotoURI(null)}>
+          <Text style={styles.retry}>Nova foto</Text>
+        </TouchableOpacity>
 
         <Button title="Compartilhar" onPress={handleTakePicture} />
       </ScrollView>
