@@ -11,11 +11,7 @@ import {
   View,
 } from "react-native";
 import { captureRef } from "react-native-view-shot";
-
-import { Button } from "../components/Button";
-import { Header } from "../components/Header";
-import { PositionChoice } from "../components/PositionChoice";
-
+import { Button, Header, PositionChoice } from "../components";
 import { PositionProps, POSITIONS } from "../utils/positions";
 import { styles } from "./styles";
 

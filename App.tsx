@@ -1,5 +1,6 @@
-import { StatusBar } from 'react-native';
-import { Home } from './src/Home';
+import React from "react";
+import { StatusBar } from "react-native";
+import { Home } from "./src/Home";
 
 export default function App() {
   return (
