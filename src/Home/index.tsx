@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { Camera } from "expo-camera";
+import React, { useEffect, useState } from "react";
 import { Image, SafeAreaView, ScrollView, TextInput, View } from "react-native";
 
 import { Button } from "../components/Button";
@@ -9,9 +10,16 @@ import { PositionProps, POSITIONS } from "../utils/positions";
 import { styles } from "./styles";
 
 export function Home() {
+  const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [positionSelected, setPositionSelected] = useState<PositionProps>(
     POSITIONS[0]
   );
+
+  useEffect(() => {
+    Camera.requestCameraPermissionsAsync().then((response) =>
+      setHasCameraPermission(response.granted)
+    );
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
