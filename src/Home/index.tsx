@@ -1,6 +1,8 @@
 import { Camera } from "expo-camera";
+import * as Sharing from "expo-sharing";
 import React, { useEffect, useRef, useState } from "react";
 import { Image, SafeAreaView, ScrollView, TextInput, View } from "react-native";
+import { captureRef } from "react-native-view-shot";
 
 import { Button } from "../components/Button";
 import { Header } from "../components/Header";
@@ -23,6 +25,11 @@ export function Home() {
     setPhotoURI(photo.uri);
   }
 
+  async function shareScreenShot() {
+    const screenshot = await captureRef(screenShotRef);
+    await Sharing.shareAsync("file://" + screenshot);
+  }
+
   useEffect(() => {
     Camera.requestCameraPermissionsAsync().then((response) =>
       setHasCameraPermission(response.granted)
@@ -35,7 +42,10 @@ export function Home() {
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
-        <View>
+        <View
+          ref={screenShotRef}
+          // style={styles.sticker}
+        >
           <Header position={positionSelected} />
 
           <View style={styles.picture}>
@@ -53,7 +63,7 @@ export function Home() {
                     : "https://images.gutefrage.net/media/fragen/bilder/meine-kamera-auf-windows-10-funktioniert-nicht-was-tun/0_big.jpg?v=1584606917000",
                 }}
                 style={styles.camera}
-                // onLoad={shareScreenShot}
+                onLoad={shareScreenShot}
               />
             )}
 
