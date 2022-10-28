@@ -31,10 +31,16 @@ export function Home() {
           <Header position={positionSelected} />
 
           <View style={styles.picture}>
-            <Image
-              source={{ uri: "https://github.com/rodrigorgtic.png" }}
-              style={styles.camera}
-            />
+            {hasCameraPermission ? (
+              <Camera style={styles.camera} />
+            ) : (
+              <Image
+                source={{
+                  uri: "https://images.gutefrage.net/media/fragen/bilder/meine-kamera-auf-windows-10-funktioniert-nicht-was-tun/0_big.jpg?v=1584606917000",
+                }}
+                style={styles.camera}
+              />
+            )}
 
             <View style={styles.player}>
               <TextInput
