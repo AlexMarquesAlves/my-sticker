@@ -1,25 +1,32 @@
-import { useState } from 'react';
-import { Image, SafeAreaView, ScrollView, TextInput, View } from 'react-native';
+import React, { useState } from "react";
+import { Image, SafeAreaView, ScrollView, TextInput, View } from "react-native";
 
-import { Header } from '../components/Header';
-import { Button } from '../components/Button';
-import { PositionChoice } from '../components/PositionChoice';
+import { Button } from "../components/Button";
+import { Header } from "../components/Header";
+import { PositionChoice } from "../components/PositionChoice";
 
-import { styles } from './styles';
-import { POSITIONS, PositionProps } from '../utils/positions';
+import { PositionProps, POSITIONS } from "../utils/positions";
+import { styles } from "./styles";
 
 export function Home() {
-  const [positionSelected, setPositionSelected] = useState<PositionProps>(POSITIONS[0]);
+  const [positionSelected, setPositionSelected] = useState<PositionProps>(
+    POSITIONS[0]
+  );
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+      >
         <View>
           <Header position={positionSelected} />
 
           <View style={styles.picture}>
-
-            <Image source={{ uri: 'https://github.com/rodrigorgtic.png' }} style={styles.camera} />
+            <Image
+              source={{ uri: "https://github.com/rodrigorgtic.png" }}
+              style={styles.camera}
+            />
 
             <View style={styles.player}>
               <TextInput
